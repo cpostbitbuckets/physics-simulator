@@ -220,3 +220,39 @@ If you launch at this point, it should work, but we won't see anything.
 
 ### Create a box
 Let's create some objects
+
+## Moving the camera
+```java
+        // in create
+        Gdx.input.setInputProcessor(stage);
+
+        // in render
+        if (Gdx.input.isKeyPressed(Input.Keys.PLUS)) {
+            camera.zoom += 0.02;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.MINUS)) {
+            camera.zoom -= 0.02;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            camera.translate(-1.0f*delta, 0, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            camera.translate(1*delta, 0, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            camera.translate(0, -1*delta, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            camera.translate(0, 1*delta, 0);
+        }
+
+        if (Gdx.input.isTouched()) {
+            Vector3 mouseOnScreen2D = new Vector3();
+            mouseOnScreen2D.x = Gdx.input.getX();
+            mouseOnScreen2D.y = Gdx.input.getY();
+
+            Vector3 mouseInWorldCoords = camera.unproject(mouseOnScreen2D);
+            body.resetToPosition(mouseInWorldCoords.x, mouseInWorldCoords.y);
+        }        
+```
+
